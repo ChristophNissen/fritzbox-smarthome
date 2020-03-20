@@ -18,11 +18,7 @@ module Fritzbox
       class << self
         def all(types: ['group', 'device'])
           response = get(command: 'getdevicelistinfos')
-          xml = nori.parse(response.body)
-
-          Array.wrap(types.map { |type| xml.dig('devicelist', type) }.flatten).map do |data|
-            new_from_api(data)
-          end
+          nori.parse(response.body)
         end
 
         def only_heaters
